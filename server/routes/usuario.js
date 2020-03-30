@@ -2,13 +2,13 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const _=require('underscore');
-
+const {verificaToken, verificaAdmin_Role} = require('../middlewares/autenticacion');
 const app = express();
 const Usuario = require('../models/usuario');
 //*****************************************************/
 // GET - mostrar registro de la BD
 //*****************************************************/
-app.get('/usuario',function(req,res){
+app.get('/usuario',verificaToken ,(req,res)=>{
     
      let desde = Number(req.query.desde || 0);
      let rango = Number(req.query.rango || 5);
@@ -37,7 +37,7 @@ app.get('/usuario',function(req,res){
 //*****************************************************/
 // POST - CREANDO USUARIO
 //*****************************************************/
-app.post('/usuario',function(req,res){
+app.post('/usuario',[verificaToken,verificaAdmin_Role],function(req,res){
     let body = req.body;
     //tomar usuario para guardar en BD
     let usuario = new Usuario({
@@ -65,7 +65,7 @@ app.post('/usuario',function(req,res){
 //*****************************************************/
 // PUT - Actualizar usuario
 //*****************************************************/
-app.put('/usuario/:id',function(req,res){
+app.put('/usuario/:id',[verificaToken,verificaAdmin_Role],function(req,res){
     let id = req.params.id;
     let body = _.pick(req.body,['nombre','email','img','role','estado']);
 
@@ -87,7 +87,7 @@ app.put('/usuario/:id',function(req,res){
 //*****************************************************/
 // DELETE - Borrar datos de un usuario
 //*****************************************************/
-app.delete('/usuario/:id',function(req,res){
+app.delete('/usuario/:id',[verificaToken,verificaAdmin_Role],function(req,res){
     //res.json('delete usuario');
 
 let id = req.params.id;
