@@ -29,7 +29,7 @@ mongoose.connect(process.env.urlDB, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useCreateIndex:true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   },(err,res)=>{
   
     if(err)throw err;

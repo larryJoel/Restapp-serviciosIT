@@ -7,35 +7,13 @@ let rolesValidos = {
 
 let Schema = mongoose.Schema;
 let usuarioSchema = new Schema({
-    nombre:{
-        type: String,
-        required: [true,'El nombre es necesario']
-    },
-    email:{
-        type:String,
-        unique:true,
-        required:[true,'El email es necesario']
-    },
-    password:{
-        type: String,
-        required:[true, 'La contraseña es obligatoria']
-    },
-    img:{
-        type:String,
-    },
-    role:{
-        type: String,
-        default:'USER_ROLE',
-        enum:rolesValidos
-    },
-    estado:{
-        type: Boolean,
-        default:true
-    },
-    google:{
-        type:Boolean,
-        default:false
-    }
+    nombre:{type: String,required: [true,'El nombre es necesario']},
+    email:{type:String,unique:true,required:[true,'El email es necesario']},
+    password:{type: String,required:[true, 'La contraseña es obligatoria']},
+    img:{type:String},
+    role:{type: String,default:'USER_ROLE',enum:rolesValidos},
+    estado:{type: Boolean,default:true},
+    google:{type:Boolean,default:false}
 });
 // una forma de quitar la información del password 
 // cuando se muestran los datos del usuario creado.
@@ -48,4 +26,4 @@ usuarioSchema.methods.toJSON = function(){
 
 
 usuarioSchema.plugin(uniqueValidator,{ message: '{PATH} Debe de ser unico' });
-module.exports = mongoose.model('usuario', usuarioSchema);
+module.exports = mongoose.model('Usuario', usuarioSchema);
